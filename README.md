@@ -1,6 +1,13 @@
 # IMChatList
-A Efficient and Flexible IM list Component.
+A Efficient and Flexible IM List Component.
 
-![screenshot](https://github.com/devilsen/IMChatList/blob/master/Screenshots/Screenshot_20170330-204105.png =200*500)
+<p align="center">
+<img alt="Sample app demo gif" src="https://github.com/devilsen/IMChatList/blob/master/Screenshots/Screenshot_20170330-204105.png" width="200" height="354" />
+</p>
+
+Some konwledge 
+[Epoxy](https://github.com/airbnb/epoxy)
+[About Custom ViewGroups](https://sriramramani.wordpress.com/2015/05/06/custom-viewgroups/)
+
 
 This is just a begin.
