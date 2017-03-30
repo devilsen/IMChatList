@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/txt_chat_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:text="18:00" />
+
+    <ImageView
+        android:id="@+id/img_chat_avatar"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_margin="5dp"
+        android:src="@mipmap/ic_launcher_round" />
+
+    <TextView
+        android:id="@+id/txt_chat_left_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:text="name"
+        android:textSize="15sp" />
+
+    <ImageView
+        android:id="@+id/img_chat_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_chat_left" />
+
+    <me.devilsen.imlist.view.ChatStatusView
+        android:id="@+id/view_status"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:layout_margin="5dp" />
+
+</merge>
