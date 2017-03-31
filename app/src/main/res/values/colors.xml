@@ -5,4 +5,6 @@
     <color name="colorAccent">#FF4081</color>
     <color name="chat_left_bg">#efefef</color>
     <color name="chat_left_press_bg">#b7b7b7</color>
+    <color name="chat_right_bg">#fcc12d</color>
+    <color name="chat_right_press_bg">#de9e01</color>
 </resources>

@@ -1,7 +1,10 @@
 package me.devilsen.imlist.view;
 
 import android.content.Context;
+import android.support.annotation.DrawableRes;
 import android.support.annotation.IntDef;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +16,10 @@ import java.lang.annotation.RetentionPolicy;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
+import butterknife.OnLongClick;
 import me.devilsen.imchatlist.R;
+import me.devilsen.imlist.ImageLoader;
 
 /**
  * author : dongSen
@@ -56,6 +62,46 @@ public class ChatItemView extends ViewGroup {
      */
     @Direction
     int mDirection = LEFT;
+
+    /**
+     * 发送状态
+     */
+    @ChatStatusView.SendStatus
+    private int mSendStatus;
+
+    private ChatItemClickListener mItemClickListener;
+
+    @OnClick(R.id.img_chat_avatar)
+    void onClickAvatar() {
+        if (mItemClickListener != null)
+            mItemClickListener.onClickAvatar();
+    }
+
+    @OnLongClick(R.id.img_chat_avatar)
+    boolean onLongClickAvatar() {
+        if (mItemClickListener != null)
+            mItemClickListener.onLongClickAvatar();
+        return true;
+    }
+
+    @OnClick(R.id.img_chat_content)
+    void onClickContent() {
+        if (mItemClickListener != null)
+            mItemClickListener.onClickContent();
+    }
+
+    @OnLongClick(R.id.img_chat_content)
+    boolean onLongClickContent() {
+        if (mItemClickListener != null)
+            mItemClickListener.onLongClickContent();
+        return true;
+    }
+
+    @OnClick(R.id.view_status)
+    void onClickStatus() {
+        if (mItemClickListener != null && mDirection == RIGHT && mSendStatus == ChatStatusView.FAIL)
+            mItemClickListener.onClickFail();
+    }
 
     public ChatItemView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -499,7 +545,41 @@ public class ChatItemView extends ViewGroup {
         return new MarginLayoutParams(p);
     }
 
-    public void setContent() {
+    /**
+     * set chat item background
+     *
+     * @param background the res of the background
+     */
+    public void setContentBackground(@DrawableRes int background) {
+        contentBackground.setImageResource(background);
+    }
+
+    /**
+     * set the name of chat
+     *
+     * @param nameString if name is null, hide the view.
+     *                   if direction is right, hide the view.
+     */
+    public void setName(@Nullable String nameString) {
+        if (nameString == null) {
+            if (name.getVisibility() == VISIBLE)
+                name.setVisibility(GONE);
+
+        } else if (mDirection == LEFT) {
+            if (!name.isShown())
+                name.setVisibility(VISIBLE);
+
+            name.setText(nameString);
+        }
+    }
+
+    /**
+     * set avatar
+     *
+     * @param avatarPath avatar path
+     */
+    public void setAvatar(@NonNull String avatarPath) {
+        ImageLoader.getInstance().loadAvatar(avatar, avatarPath);
     }
 
     /**
@@ -508,13 +588,31 @@ public class ChatItemView extends ViewGroup {
      * @param sendStatus send status
      */
     public void setStatus(@ChatStatusView.SendStatus int sendStatus) {
+        mSendStatus = sendStatus;
         status.setSendStatus(sendStatus);
+    }
+
+    /**
+     * set time
+     *
+     * @param timeString if timeString is null, hide the view
+     */
+    public void setTime(@Nullable String timeString) {
+        if (timeString == null) {
+            if (time.getVisibility() == VISIBLE)
+                setTimeVisibility(GONE);
+        } else {
+            if (!time.isShown())
+                setTimeVisibility(VISIBLE);
+
+            time.setText(timeString);
+        }
     }
 
     /**
      * 设置时间是否可见
      */
-    public void setVisibility(int visibility) {
+    public void setTimeVisibility(int visibility) {
         time.setVisibility(visibility);
     }
 
@@ -525,8 +623,21 @@ public class ChatItemView extends ViewGroup {
      */
     public void setDirection(@Direction int direction) {
         this.mDirection = direction;
-        if (direction == RIGHT)
+        if (direction == LEFT) {
+            setContentBackground(R.drawable.bg_chat_left);
+        } else {
             name.setVisibility(GONE);
+            setContentBackground(R.drawable.bg_chat_right);
+        }
+    }
+
+    /**
+     * set item click listener
+     *
+     * @param itemClickListener click listener
+     */
+    public void setOnChatItemClickListener(@NonNull ChatItemClickListener itemClickListener) {
+        this.mItemClickListener = itemClickListener;
     }
 
 }

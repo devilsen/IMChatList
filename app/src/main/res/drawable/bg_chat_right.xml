@@ -3,14 +3,14 @@
     <item android:state_pressed="true">
         <shape>
             <corners android:radius="5dp" />
-            <solid android:color="@color/chat_left_press_bg" />
+            <solid android:color="@color/chat_right_press_bg" />
         </shape>
     </item>
 
     <item>
         <shape>
             <corners android:radius="5dp" />
-            <solid android:color="@color/chat_left_bg" />
+            <solid android:color="@color/chat_right_bg" />
         </shape>
     </item>
 </selector>
