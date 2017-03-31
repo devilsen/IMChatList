@@ -6,8 +6,6 @@ import com.airbnb.epoxy.EpoxyAdapter;
 
 import me.devilsen.imlist.models.ChatImgModel_;
 import me.devilsen.imlist.models.ChatTxtModel_;
-import me.devilsen.imlist.view.ChatItemAdapterClickListener;
-import me.devilsen.imlist.view.ChatItemClickListener;
 import me.devilsen.imlist.view.ChatItemView;
 import me.devilsen.imlist.view.ChatStatusView;
 
@@ -30,65 +28,12 @@ public class ChatAdapter extends EpoxyAdapter {
                         .text("aaaa" + i)
                         .direction(ChatItemView.RIGHT)
                         .time("18:00")
-                        .itemClickListener(new ChatItemAdapterClickListener() {
-                            @Override
-                            public void onClickAvatar() {
-                                Log.e("onClickAvatar", "onClickAvatar");
-                            }
-
-                            @Override
-                            public void onClickContent() {
-                                Log.e("onClickContent", "onClickContent");
-
-                            }
-
-                            @Override
-                            public void onLongClickContent() {
-                                Log.e("onLongClickContent", "onLongClickContent");
-
-                            }
-
-                            @Override
-                            public void onClickFail() {
-                                Log.e("onClickFail", "onClickFail");
-
-                            }
-                        })
                         .status(ChatStatusView.FAIL));
             else
                 addModels(new ChatTxtModel_()
                         .text("bbbb" + i)
                         .direction(ChatItemView.LEFT)
                         .name("name" + i)
-                        .itemClickListener(new ChatItemClickListener() {
-                            @Override
-                            public void onClickAvatar() {
-                                Log.e("onClickAvatar", "onClickAvatar");
-                            }
-
-                            @Override
-                            public void onLongClickAvatar() {
-                                Log.e("onLongClickAvatar", "onLongClickAvatar");
-
-                            }
-
-                            @Override
-                            public void onClickContent() {
-                                Log.e("onClickContent", "onClickContent");
-
-                            }
-
-                            @Override
-                            public void onLongClickContent() {
-                                Log.e("onLongClickContent", "onLongClickContent");
-
-                            }
-
-                            @Override
-                            public void onClickFail() {
-                                Log.e("onClickFail", "onClickFail");
-                            }
-                        })
                         .status(ChatStatusView.SUCCESS));
         }
 
