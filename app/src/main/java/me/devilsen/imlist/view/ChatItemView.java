@@ -579,7 +579,7 @@ public class ChatItemView extends ViewGroup {
      * @param avatarPath avatar path
      */
     public void setAvatar(@NonNull String avatarPath) {
-        ImageLoader.getInstance().loadAvatar(avatar, avatarPath);
+        ImageLoader.getInstance().loadAvatar(getContext(), avatar, avatarPath);
     }
 
     /**

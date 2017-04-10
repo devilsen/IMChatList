@@ -1,19 +1,23 @@
 package me.devilsen.imlist.models;
 
+import android.content.Context;
+
 import com.airbnb.epoxy.EpoxyAttribute;
 import com.airbnb.epoxy.EpoxyModelWithHolder;
 
+import me.devilsen.imlist.ClickAction;
+import me.devilsen.imlist.message.UMessage;
+import me.devilsen.imlist.message.UMessageContent;
 import me.devilsen.imlist.view.ChatItemClickListener;
 import me.devilsen.imlist.view.ChatItemView;
 import me.devilsen.imlist.view.ChatStatusView;
-
 
 /**
  * author : dongSen
  * date : 2017/3/30
  * desc : base model
  */
-abstract class BaseChatModel<T extends BaseEpoxyHolder> extends EpoxyModelWithHolder<T>
+abstract class BaseChatModel<T extends BaseEpoxyHolder, C extends UMessageContent> extends EpoxyModelWithHolder<T>
         implements ChatItemClickListener {
 
     @EpoxyAttribute
@@ -25,6 +29,9 @@ abstract class BaseChatModel<T extends BaseEpoxyHolder> extends EpoxyModelWithHo
     int status;
 
     @EpoxyAttribute
+    String userId;
+
+    @EpoxyAttribute
     String time;
 
     @EpoxyAttribute
@@ -32,6 +39,20 @@ abstract class BaseChatModel<T extends BaseEpoxyHolder> extends EpoxyModelWithHo
 
     @EpoxyAttribute
     String avatar;
+
+    @EpoxyAttribute
+    UMessage message;
+
+    protected Context context;
+
+    protected C content;
+
+    private ClickAction action;
+
+    public BaseChatModel(Context context) {
+        this.context = context;
+        action = new ClickAction(context);
+    }
 
     abstract void bindHolder(T holder);
 
@@ -49,25 +70,26 @@ abstract class BaseChatModel<T extends BaseEpoxyHolder> extends EpoxyModelWithHo
 
     @Override
     public void onClickAvatar() {
+        action.clickAvatar(userId);
     }
 
     @Override
     public void onLongClickAvatar() {
-
+        action.longClickAvatar(userId, name);
     }
 
     @Override
     public void onClickContent() {
-
+        action.clickContent(message.getMessageContent());
     }
 
     @Override
     public void onLongClickContent() {
-
+        action.longClickContent(message);
     }
 
     @Override
     public void onClickFail() {
-
+        action.clickFail(message);
     }
 }

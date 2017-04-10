@@ -21,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
 
         ButterKnife.bind(this);
 
-        ChatAdapter chatAdapter = new ChatAdapter();
+        ChatAdapter chatAdapter = new ChatAdapter(this);
 //        TestAdapter chatAdapter = new TestAdapter();
 
         mChatList.setAdapter(chatAdapter);

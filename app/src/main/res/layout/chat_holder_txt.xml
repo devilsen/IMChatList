@@ -7,7 +7,8 @@
         android:id="@+id/txt_chat_content"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_cancel_red_700_24dp"
-        android:padding="5dp"/>
+        android:autoLink="email|phone|web"
+        android:padding="5dp"
+        android:src="@drawable/ic_cancel_red_700_24dp" />
 
 </me.devilsen.imlist.view.ChatItemView>

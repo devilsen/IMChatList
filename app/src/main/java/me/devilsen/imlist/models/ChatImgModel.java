@@ -1,12 +1,14 @@
 package me.devilsen.imlist.models;
 
+import android.content.Context;
 import android.widget.ImageView;
 
-import com.airbnb.epoxy.EpoxyAttribute;
 import com.airbnb.epoxy.EpoxyModelClass;
 
 import butterknife.BindView;
 import me.devilsen.imchatlist.R;
+import me.devilsen.imlist.ImageLoader;
+import me.devilsen.imlist.message.UMessageImageContent;
 
 /**
  * author : dongSen
@@ -14,14 +16,17 @@ import me.devilsen.imchatlist.R;
  * desc :
  */
 @EpoxyModelClass(layout = R.layout.chat_holder_img)
-public abstract class ChatImgModel extends BaseChatModel<ChatImgModel.ImgHolder> {
+public abstract class ChatImgModel extends BaseChatModel<ChatImgModel.ImgHolder, UMessageImageContent> {
 
-    @EpoxyAttribute
-    String path;
+    public ChatImgModel(Context context) {
+        super(context);
+    }
 
     @Override
     public void bindHolder(ImgHolder holder) {
-//        holder.imageView.
+        content = (UMessageImageContent) message.getMessageContent();
+
+        ImageLoader.getInstance().loadChatImg(context, holder.imageView, content);
     }
 
     static class ImgHolder extends BaseEpoxyHolder {
