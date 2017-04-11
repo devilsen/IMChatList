@@ -9,6 +9,7 @@ import me.devilsen.imlist.action.ClickAction;
 import me.devilsen.imlist.action.ClickActionContent;
 import me.devilsen.imlist.message.UMessage;
 import me.devilsen.imlist.message.UMessageContent;
+import me.devilsen.imlist.message.UserInfo;
 import me.devilsen.imlist.view.ChatItemClickListener;
 import me.devilsen.imlist.view.ChatItemView;
 import me.devilsen.imlist.view.ChatStatusView;
@@ -27,7 +28,7 @@ abstract class BaseChatModel<T extends BaseEpoxyHolder, C extends UMessageConten
 
     @EpoxyAttribute
     @ChatStatusView.SendStatus
-    int status;
+    int status = ChatStatusView.SUCCESS;
 
     @EpoxyAttribute
     String userId;
@@ -40,6 +41,9 @@ abstract class BaseChatModel<T extends BaseEpoxyHolder, C extends UMessageConten
 
     @EpoxyAttribute
     String avatar;
+
+    @EpoxyAttribute
+    UserInfo userInfo;
 
     @EpoxyAttribute
     UMessage message;
@@ -62,14 +66,58 @@ abstract class BaseChatModel<T extends BaseEpoxyHolder, C extends UMessageConten
 
     @Override
     public void bind(T holder) {
-        holder.chatLayout.setDirection(direction);
-        holder.chatLayout.setTime(time);
-        holder.chatLayout.setName(name);
-        holder.chatLayout.setAvatar(avatar);
-        holder.chatLayout.setStatus(status);
+        setUserInfo();
+
+        setMessageInfo();
+
+        setSingleInfo(holder);
+
         holder.chatLayout.setOnChatItemClickListener(this);
 
         bindHolder(holder);
+    }
+
+    /**
+     * set user info
+     */
+    private void setUserInfo() {
+        if (userInfo != null) {
+            if (userInfo.getUserId() != null)
+                userId = userInfo.getUserId();
+
+            if (userInfo.getName() != null)
+                name = userInfo.getName();
+
+            if (userInfo.getAvatar() != null)
+                avatar = userInfo.getAvatar();
+        }
+    }
+
+    /**
+     * set message info
+     */
+    private void setMessageInfo() {
+        if (message != null) {
+            if (message.getTime() != null)
+                time = message.getTime();
+
+            if (message.getDirection() != ChatItemView.LEFT)
+                direction = message.getDirection();
+
+            if (message.getSendStatus() != ChatStatusView.LOADING)
+                status = message.getSendStatus();
+        }
+    }
+
+    /**
+     * if set single info, set it
+     */
+    private void setSingleInfo(T holder) {
+        holder.chatLayout.setName(name);
+        holder.chatLayout.setAvatar(avatar);
+        holder.chatLayout.setTime(time);
+        holder.chatLayout.setDirection(direction);
+        holder.chatLayout.setStatus(status);
     }
 
     @Override
