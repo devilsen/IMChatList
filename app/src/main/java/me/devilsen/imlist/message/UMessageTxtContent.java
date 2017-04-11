@@ -45,4 +45,5 @@ public class UMessageTxtContent extends UMessageContent {
         }
         return true;
     }
+
 }

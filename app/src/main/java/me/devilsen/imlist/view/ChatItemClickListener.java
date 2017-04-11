@@ -11,7 +11,7 @@ public interface ChatItemClickListener {
 
     void onLongClickAvatar();
 
-    void onClickContent();
+    void onClickContentView();
 
     void onLongClickContent();
 

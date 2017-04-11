@@ -28,6 +28,11 @@ public abstract class ChatTxtModel extends BaseChatModel<ChatTxtModel.TxtHolder,
         holder.textView.setText(content.getContent());
     }
 
+    @Override
+    public void onClickContent() {
+        clickActionContent.clickTxtContent(content);
+    }
+
     static class TxtHolder extends BaseEpoxyHolder {
         @BindView(R.id.txt_chat_content)
         TextView textView;

@@ -9,6 +9,10 @@ public class UMessageImageContent extends UMessageContent {
 
     private String path;
 
+    public UMessageImageContent(String path) {
+        this.path = path;
+    }
+
     public String getPath() {
         return path;
     }
@@ -41,4 +45,5 @@ public class UMessageImageContent extends UMessageContent {
         }
         return true;
     }
+
 }

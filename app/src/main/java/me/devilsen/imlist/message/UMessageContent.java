@@ -5,5 +5,8 @@ package me.devilsen.imlist.message;
  * date : 2017/4/10
  * desc :
  */
-public abstract class UMessageContent {
+public abstract class UMessageContent{
+
+
+
 }

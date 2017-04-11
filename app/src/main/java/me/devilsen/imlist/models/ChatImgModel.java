@@ -29,6 +29,11 @@ public abstract class ChatImgModel extends BaseChatModel<ChatImgModel.ImgHolder,
         ImageLoader.getInstance().loadChatImg(context, holder.imageView, content);
     }
 
+    @Override
+    public void onClickContent() {
+        clickActionContent.clickImageContent(content);
+    }
+
     static class ImgHolder extends BaseEpoxyHolder {
         @BindView(R.id.img_chat_content)
         ImageView imageView;

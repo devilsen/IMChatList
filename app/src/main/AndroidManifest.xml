@@ -21,6 +21,8 @@
 
         <activity android:name="me.devilsen.imlist.AvatarActivity" />
 
+        <activity android:name="me.devilsen.imlist.ImageActivity" />
+
     </application>
 
 </manifest>

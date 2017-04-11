@@ -32,7 +32,7 @@ public class ImageLoader {
                            @NonNull String avatarPath) {
         Glide.with(context)
                 .load(avatarPath)
-                .fitCenter()
+                .centerCrop()
                 .into(imageView);
     }
 
@@ -41,6 +41,17 @@ public class ImageLoader {
                             @NonNull UMessageImageContent imageContent) {
         Glide.with(context)
                 .load(imageContent.getPath())
+                .centerCrop()
+                .override(400, 400)
+                .into(imageView);
+
+    }
+
+    public void loadChatImg(@NonNull Context context,
+                            @NonNull ImageView imageView,
+                            @NonNull String imagePath) {
+        Glide.with(context)
+                .load(imagePath)
                 .centerCrop()
                 .override(400, 400)
                 .into(imageView);

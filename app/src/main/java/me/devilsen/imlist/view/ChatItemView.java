@@ -87,7 +87,7 @@ public class ChatItemView extends ViewGroup {
     @OnClick(R.id.img_chat_content)
     void onClickContent() {
         if (mItemClickListener != null)
-            mItemClickListener.onClickContent();
+            mItemClickListener.onClickContentView();
     }
 
     @OnLongClick(R.id.img_chat_content)
@@ -146,10 +146,12 @@ public class ChatItemView extends ViewGroup {
                 heightMeasureSpec,
                 heightConstraints);
 
+        int timeHeightWithMargins = getChildHeightWithMargins(time);
+
         // 2. Update the constraints
         if (time.getVisibility() != GONE) {
-            heightConstraints += time.getMeasuredHeight();
-            height = Math.max(time.getMeasuredHeight(), height);
+            heightConstraints += timeHeightWithMargins;
+            height = Math.max(timeHeightWithMargins, height);
         }
 
         // 3. Measure the ProfilePhoto
@@ -164,7 +166,7 @@ public class ChatItemView extends ViewGroup {
         widthConstraints += avatar.getMeasuredWidth();
         width += avatar.getMeasuredWidth();
         height = Math.max(
-                getChildHeightWithMargins(avatar) + getChildHeightWithMargins(time),
+                getChildHeightWithMargins(avatar) + timeHeightWithMargins,
                 height);
 
         // 5. Measure the Menu.
@@ -178,7 +180,7 @@ public class ChatItemView extends ViewGroup {
         // 6. Update the constraints.
         widthConstraints += status.getMeasuredWidth();
         width += status.getMeasuredWidth();
-        height = Math.max(status.getMeasuredHeight(), height);
+//        height = Math.max(status.getMeasuredHeight(), height);
 
         // 7. Prepare the vertical MeasureSpec.
         int verticalWidthMeasureSpec = MeasureSpec.makeMeasureSpec(
@@ -218,14 +220,23 @@ public class ChatItemView extends ViewGroup {
                 verticalHeightMeasureSpec,
                 name.getMeasuredHeight());
 
+        // avoid content too high
+        if (name.getVisibility() == GONE) {
+            heightConstraints += getChildHeightWithMargins(avatar) * AVATAR_SCALE;
+        } else {
+            heightConstraints += getChildHeightWithMargins(name);
+        }
+
         // 12. Update the sizes.
         MarginLayoutParams contentBackgroundParams = (MarginLayoutParams) contentBackground.getLayoutParams();
 
         width += Math.max(avatar.getMeasuredWidth(), content.getMeasuredWidth());
-        height = Math.max(getChildHeightWithMargins(time) +
-                getChildHeightWithMargins(name) +
-                getChildHeightWithMargins(content) +
-                contentBackgroundParams.topMargin + contentBackgroundParams.bottomMargin, height);
+        height = Math.max(
+                        heightConstraints +
+                        getChildHeightWithMargins(content) +
+                        contentBackgroundParams.topMargin +
+                        contentBackgroundParams.bottomMargin,
+                height);
 
         // 13. Set the dimension for this ViewGroup.
         setMeasuredDimension(
@@ -433,7 +444,7 @@ public class ChatItemView extends ViewGroup {
                 widthConstraints,
                 heightConstraints + content.getMeasuredHeight() + heightMargin);
 
-        // 9. Layout the background
+        // 11. Layout the background
         contentBackground.layout(widthConstraints - content.getMeasuredWidth(),
                 heightConstraints + heightMargin,
                 widthConstraints,
@@ -624,6 +635,7 @@ public class ChatItemView extends ViewGroup {
     public void setDirection(@Direction int direction) {
         this.mDirection = direction;
         if (direction == LEFT) {
+//            name.setVisibility(GONE);
             setContentBackground(R.drawable.bg_chat_left);
         } else {
             name.setVisibility(GONE);

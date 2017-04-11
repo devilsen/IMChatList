@@ -35,4 +35,9 @@ public class MainActivity extends AppCompatActivity {
 //        mChatList.getRecycledViewPool().setMaxRecycledViews(R.layout.model_color, 50);
 
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
 }

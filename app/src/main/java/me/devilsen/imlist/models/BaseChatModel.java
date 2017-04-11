@@ -5,7 +5,8 @@ import android.content.Context;
 import com.airbnb.epoxy.EpoxyAttribute;
 import com.airbnb.epoxy.EpoxyModelWithHolder;
 
-import me.devilsen.imlist.ClickAction;
+import me.devilsen.imlist.action.ClickAction;
+import me.devilsen.imlist.action.ClickActionContent;
 import me.devilsen.imlist.message.UMessage;
 import me.devilsen.imlist.message.UMessageContent;
 import me.devilsen.imlist.view.ChatItemClickListener;
@@ -18,7 +19,7 @@ import me.devilsen.imlist.view.ChatStatusView;
  * desc : base model
  */
 abstract class BaseChatModel<T extends BaseEpoxyHolder, C extends UMessageContent> extends EpoxyModelWithHolder<T>
-        implements ChatItemClickListener {
+        implements ChatItemClickListener, ClickContentListener {
 
     @EpoxyAttribute
     @ChatItemView.Direction
@@ -49,9 +50,12 @@ abstract class BaseChatModel<T extends BaseEpoxyHolder, C extends UMessageConten
 
     private ClickAction action;
 
+    ClickActionContent clickActionContent;
+
     public BaseChatModel(Context context) {
         this.context = context;
         action = new ClickAction(context);
+        clickActionContent = new ClickActionContent(context);
     }
 
     abstract void bindHolder(T holder);
@@ -79,8 +83,8 @@ abstract class BaseChatModel<T extends BaseEpoxyHolder, C extends UMessageConten
     }
 
     @Override
-    public void onClickContent() {
-        action.clickContent(message.getMessageContent());
+    public void onClickContentView() {
+        onClickContent();
     }
 
     @Override
